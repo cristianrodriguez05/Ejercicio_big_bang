@@ -4,7 +4,7 @@ Programa que permite ajustar un temporizador para ejercicios estilo EMOM usando 
 
 __Integrantes__:
 
-  - _________________________ - ___________________
+  - Esteban David Vargas Medina - 20181020063
 
   - Jhon Sebastian Alberto Cortes - 20191020117
 
