@@ -2,11 +2,10 @@
 
 Programa que permite ajustar un temporizador para ejercicios estilo EMOM usando el modelo de desarrollo big-bang 
 
+__Integrantes__:
 
-Integrantes: 
+  - _________________________ - ___________________
 
-. _________________________ - ___________________
+  - _______________________ - __________________________
 
-. _______________________ - __________________________
-
-. Cristian David Rodríguez López - 20171020072  
+  - Cristian David Rodríguez López - 20171020072  
