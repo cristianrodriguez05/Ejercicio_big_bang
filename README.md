@@ -14,7 +14,7 @@ __Experiencia__:
 
   - Al principio es un poco incierto como va a ser el trabajo colaborativo de manera simultanea
 
-  - En el cmaino se va añadiendo lineas de codigo para que se pueda cumplir con los requerimientos
+  - En el camino se va añadiendo lineas de codigo para que se pueda cumplir con los requerimientos
    
   - Se eliminan funcionalidades  que no eran necesarias para cumplir con los requerimientos
 
