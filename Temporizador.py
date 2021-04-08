@@ -1,98 +1,130 @@
-import Tkinter as tk
-from Tkinter import *
-import Tkinter 
+import tkinter as tk
+import time
+from playsound import playsound
+from threading import Thread
 
-class Temporizador:
+def cronometro():
 
+    def CasiFinRonda():
+        playsound("Ultimos segundos.mp3")
 
+    def FinRonda():
+        playsound("Fin de ronda.mp3")
 
-   
-   #def calcular():
+    def iniciar():
+        global repeticion, tiempo, descanso, t, i
+        tiempo = int(e1.get()) 
+        repeticion = int(e2.get()) 
+        descanso = int(e3.get()) 
+        t = tiempo
+        i = 1
+        tiempoRutina()
 
-   def cronometro(self, marco):
-      ventanaCronometro=Toplevel(marco)
-      ventanaCronometro.geometry("480x400")
-      ventanaCronometro.configure(background="#000000")
+    def tiempoRutina():
+        global t, tiempo, repeticion, i
 
-      Encabezado_1 = tk.Label(ventanaCronometro, text="         Temporizador EMOM          ", bg="OliveDrab3",font=(None, 20)).grid(row=0,column=0,columnspan=3)
+        for w in pantallaReloj.winfo_children():
+            w.grid_remove()
 
-      Barra_1 = tk.Label(ventanaCronometro, text="___________________________________________________", bg="black",fg="black").grid(row=1,column=0,columnspan=3)
-      Titulo_1 = tk.Label(ventanaCronometro, text="    EJERCICIO   ", bg="DarkOliveGreen1").grid(row=2,column=0,columnspan=3)
-      ejercicio = tk.StringVar()
-      Etiqueta1 =tk.Label(ventanaCronometro, textvariable = ejercicio, bg="grey").grid(row=3, column=0,columnspan=3)
-      
-      Barra_2 = tk.Label(ventanaCronometro, text="___________________________________________________", bg="black",fg="black").grid(row=4,column=0,columnspan=3)
-      rondaActual= tk.StringVar()
-      rondaFinal= tk.StringVar()
-      Titulo_2 = tk.Label(ventanaCronometro, text="    RONDA    ", bg="DarkOliveGreen1").grid(row=5,column=0,columnspan=3)
-      Etiqueta2=tk.Label(ventanaCronometro, textvariable = rondaActual, bg="grey").grid(row=6, column=0,columnspan=3)
-      Titulo_3 = tk.Label(ventanaCronometro, text="    DE    ", bg="DarkOliveGreen1").grid(row=7,column=0,columnspan=3)
-      Etiqueta3=tk.Label(ventanaCronometro, textvariable = rondaFinal, bg="grey").grid(row=8, column=0,columnspan=3)
-      
-      Barra_3 = tk.Label(ventanaCronometro, text="___________________________________________________", bg="black",fg="black").grid(row=9,column=0,columnspan=3)
-      time= tk.Label(ventanaCronometro,bg="grey" ,fg='red', width=20, font=("","18")).grid(row=10,column=0,columnspan=3)
-      
-      Barra_4 = tk.Label(ventanaCronometro, text="___________________________________________________", bg="black",fg="black").grid(row=11,column=0,columnspan=3)
-      anuncio = tk.StringVar()
-      Etiqueta4 =tk.Label(ventanaCronometro, textvariable = anuncio, bg="grey").grid(row=12, column=0,columnspan=3)
+        tk.Label(pantallaReloj, text="RONDA "+str(i), bg="#000000", fg="OliveDrab3", font=("", 30)).grid(row=0, column=0)
+        tk.Label(pantallaReloj, text=time.strftime("%H:%M:%S", time.gmtime(t)), bg="#000000", fg="OliveDrab3", font=("", 40)).grid(row=1, column=0)
 
-      Barra_5 = tk.Label(ventanaCronometro, text="___________________________________________________", bg="black",fg="black").grid(row=13,column=0,columnspan=3)
-      btnPausar = Button(ventanaCronometro,text='Pausar', borderwidth=7,bg="OliveDrab3",width=20, anchor="n").grid(row=14,column=0)
-      btnContinuar = Button(ventanaCronometro,text='Continuar', borderwidth=7,bg="OliveDrab3",width=20, anchor="n").grid(row=14,column=1)
-      btnReiniciar = Button(ventanaCronometro,text='Reiniciar', borderwidth=7,bg="OliveDrab3",width=20, anchor="n").grid(row=14,column=2)
-      
-   def iniciar(self):
+        if t==0:
+            i=i+1
 
-      marco=tk.Tk()
-      marco.title("Temporizador EMOM")
-      marco.geometry("410x500")
-      marco.configure(background="#000000")
+        if(t>0):
+            t -= 1
+            ventanaCronometro.after(1000, tiempoRutina)
+        else:
+            repeticion -= 1
+            t = descanso
+            if(repeticion > 0):
+                ventanaCronometro.after(1000, tiempoDescanso)
 
-      Encabezado1 = tk.Label(marco, text="         Temporizador EMOM          ", bg="OliveDrab3",font=(None, 20)).grid(row=0,column=0,columnspan=2)
-      Bar1 = tk.Label(marco, text="___________________________________________________", bg="black",fg="black").grid(row=1,column=0,columnspan=2)
- 
+        CasiFinR = Thread(target=CasiFinRonda)
+        FinR = Thread(target=FinRonda)
 
-      Titulo1 = tk.Label(marco, text="    RUTINA   ", bg="DarkOliveGreen1").grid(row=5,column=0,columnspan=2)
-      e1 = Entry(marco)
-      e1.pack()
-      e1.grid(row=7,column=0,columnspan=2,padx=10,ipadx=100)
-      Barra2 = tk.Label(marco, text="___________________________________________________", bg="black",fg="grey").grid(row=8,column=0,columnspan=2)
-      
-      Titulo2 = tk.Label(marco, text="    CADA    ", bg="DarkOliveGreen1").grid(row=9,column=0,columnspan=2)
-      e2 = Entry(marco)
-      e2.pack()
-      e2.grid(row=10,column=0,columnspan=2)
-      Texto1 = tk.Label(marco, text="Minutos", bg="grey").grid(row=11,column=0,columnspan=2)
-      e3 = Entry(marco)
-      e3.pack()
-      e3.grid(row=12,column=0,columnspan=2)
-      Texto2 = tk.Label(marco, text="Segundos", bg="grey").grid(row=13,column=0,columnspan=2)
-      Barra3 = tk.Label(marco, text="___________________________________________________", bg="black",fg="grey").grid(row=14,column=0,columnspan=2)
+        if(t>0 and t<5):
+            CasiFinR.start()
+        
+        if(t == 0):
+            FinR.start()
 
-      Titulo3 = tk.Label(marco, text="    REPETICIONES   ", bg="DarkOliveGreen1").grid(row=15,column=0,columnspan=2)
-      e4 = Entry(marco)
-      e4.pack()
-      e4.grid(row=16,column=0,columnspan=2)
-      Barra4 = tk.Label(marco, text="___________________________________________________", bg="black",fg="grey").grid(row=17,column=0,columnspan=2)
+    def tiempoDescanso():
+        global t, tiempo
 
-      Titulo4 = tk.Label(marco, text="    DESCANSO    ", bg="DarkOliveGreen1").grid(row=18,column=0,columnspan=2)
-      e5 = Entry(marco)
-      e5.pack()
-      e5.grid(row=19,column=0,columnspan=2)
-      Texto3 = tk.Label(marco, text="Minutos", bg="grey").grid(row=20,column=0,columnspan=2)
-      e6 = Entry(marco)
-      e6.pack()
-      e6.grid(row=21,column=0,columnspan=2)
-      Texto4 = tk.Label(marco, text="Segundos", bg="grey").grid(row=22,column=0,columnspan=2)
-      Barra5 = tk.Label(marco, text="___________________________________________________", bg="black",fg="grey").grid(row=23,column=0,columnspan=2)
-      
-      Bar2 = tk.Label(marco, text="___________________________________________________", bg="black",fg="black").grid(row=25,column=0,columnspan=2)
-      btnEmpezar = Button(marco,text='Empezar',command=lambda: temporizador.cronometro(marco), borderwidth=7,bg="OliveDrab3",width=50, anchor="n")
-      btnEmpezar.grid(row=26,column=0,columnspan=2)
-    
-      
-      marco.mainloop()
+        for w in pantallaReloj.winfo_children():
+            w.grid_remove()
 
+        tk.Label(pantallaReloj, text="DESCANSO", bg="#000000", fg="OliveDrab3", font=("", 30)).grid(row=0, column=0)
+        tk.Label(pantallaReloj, text=time.strftime("%H:%M:%S", time.gmtime(t)), bg="#000000", fg="OliveDrab3", font=("", 40)).grid(row=1, column=0)
+        
+        if(t>0):
+            t -= 1
+            ventanaCronometro.after(1000, tiempoDescanso)
+        else:
+            t = tiempo
+            ventanaCronometro.after(1000, tiempoRutina)
+        
+        CasiFinR = Thread(target=CasiFinRonda)
+        FinR = Thread(target=FinRonda)
 
-temporizador = Temporizador()
-temporizador.iniciar()
+        if(t>0 and t<5):
+            CasiFinR.start()
+            
+        if(t == 0):
+            FinR.start()
+
+    ventanaCronometro = tk.Toplevel(marco)
+    ventanaCronometro.geometry("410x360")
+    ventanaCronometro.configure(background="#000000")
+
+    fondo = tk.Frame(ventanaCronometro)
+    fondo.config(bg="#000000")
+    fondo.pack(fill="both", expand="true", padx=20, pady=30)
+
+    tk.Label(fondo, text="       Temporizador EMOM       ", bg="OliveDrab3",font=(None, 20)).grid(row=0, column=0)
+
+    pantallaReloj = tk.Frame(fondo, bg="#000000")
+    pantallaReloj.grid(row=1, column=0, ipady=10)
+
+    iniciar()
+
+    ventanaCronometro.mainloop()
+
+marco=tk.Tk()
+marco.title("Temporizador EMOM")
+marco.geometry("410x360")
+marco.configure(background="#000000")
+
+Encabezado1 = tk.Label(marco, text="         Temporizador EMOM          ", bg="OliveDrab3",font=(None, 20)).grid(row=0,column=0,columnspan=2)
+
+Bar1 = tk.Label(marco, text="___________________________________________________", bg="#000000", fg="#000000",).grid(row=25,column=0,columnspan=2)
+
+Barra2 = tk.Label(marco, text="___________________________________________________", bg="#000000", fg="OliveDrab3").grid(row=8,column=0,columnspan=2)
+
+Titulo2 = tk.Label(marco, text="    CADA    ", bg="#000000", fg="OliveDrab3").grid(row=9,column=0,columnspan=2)
+
+e1 = tk.Entry(marco, bg="#000000", fg="OliveDrab3")
+e1.grid(row=12,column=0,columnspan=2)
+
+Texto2 = tk.Label(marco, text="Segundos", bg="#000000", fg="OliveDrab3").grid(row=13,column=0,columnspan=2)
+Barra3 = tk.Label(marco, text="___________________________________________________", bg="#000000", fg="OliveDrab3").grid(row=14,column=0,columnspan=2)
+Titulo3 = tk.Label(marco, text="    REPETICIONES   ", bg="#000000", fg="OliveDrab3").grid(row=15,column=0,columnspan=2)
+e2 = tk.Entry(marco, bg="#000000", fg="OliveDrab3")
+e2.grid(row=16,column=0,columnspan=2)
+
+Barra4 = tk.Label(marco, text="___________________________________________________", bg="#000000", fg="OliveDrab3").grid(row=17,column=0,columnspan=2)
+Titulo4 = tk.Label(marco, text="    DESCANSO    ", bg="#000000", fg="OliveDrab3").grid(row=18,column=0,columnspan=2)
+e3 = tk.Entry(marco, bg="#000000", fg="OliveDrab3")
+e3.grid(row=19,column=0,columnspan=2)
+
+Texto3 = tk.Label(marco, text="Segundos", bg="#000000", fg="OliveDrab3").grid(row=20,column=0,columnspan=2)
+Barra5 = tk.Label(marco, text="___________________________________________________",bg="#000000", fg="OliveDrab3").grid(row=23,column=0,columnspan=2)
+
+Bar2 = tk.Label(marco, text="___________________________________________________", bg="#000000", fg="#000000",).grid(row=25,column=0,columnspan=2)
+
+btnEmpezar = tk.Button(marco,text='Empezar',command=cronometro, borderwidth=7,bg="OliveDrab3",width=50, anchor="n")
+btnEmpezar.grid(row=26,column=0,columnspan=2)
+
+marco.mainloop()
