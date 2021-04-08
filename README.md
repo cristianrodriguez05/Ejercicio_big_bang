@@ -10,6 +10,3 @@ __Integrantes__:
 
   - Cristian David Rodríguez López - 20171020072  
 
-__Experiencia ejercicio__
-
-  -
